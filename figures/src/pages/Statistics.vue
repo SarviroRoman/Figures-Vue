@@ -1,13 +1,108 @@
 <template>
-  <h1>Statistics</h1>
+  <div v-if='figures.length' class="container statistics-section">
+    <div class="text-center">
+      <b-table bordered hover striped 
+        :items="getStatistics"
+      >
+        <template slot="table-caption">Statistics</template>
+      </b-table>
+    </div>
+  </div>
+  <div v-else class="spinner-section">
+    <b-spinner variant="primary" label="Loading..."></b-spinner>
+  </div>
+  
 </template>
 
 <script>
+import axios from 'axios'
 export default {
-  name: 'statistics'
+  name: 'statistics',
+  data() {
+    return {
+      figures: [],
+    }
+  },
+  computed: {
+    getStatistics() {
+      let totalArea = 0; 
+      let circlesArea = 0; 
+      let squaresArea = 0; 
+      let rectanglesArea = 0; 
+      let trianglesArea = 0; 
+
+      const Circles = this.figures.filter(figure => figure.type === 'Circle'); 
+      for (let item of Circles){ 
+        circlesArea += item.area; 
+        totalArea += item.area; 
+      } 
+
+      const Squares = this.figures.filter(figure => figure.type === 'Square'); 
+      for (let item of Squares){ 
+        squaresArea += item.area; 
+        totalArea += item.area; 
+      } 
+
+      const Rectangles = this.figures.filter(figure => figure.type === 'Rectangle'); 
+      for (let item of Rectangles){ 
+        rectanglesArea += item.area; 
+        totalArea += item.area; 
+      } 
+
+      const Triangles = this.figures.filter(figure => figure.type === 'Triangle'); 
+      for (let item of Triangles){ 
+        trianglesArea += item.area; 
+        totalArea += item.area; 
+      } 
+
+      const circlePercent = 100*circlesArea/totalArea; 
+      const squarePercent = 100*squaresArea/totalArea; 
+      const rectanglePercent = 100*rectanglesArea/totalArea; 
+      const trianglePercent = 100*trianglesArea/totalArea; 
+
+      const statistics = [
+        {
+          type: 'Circle',
+          area: circlesArea,
+          percent: Math.round(circlePercent * 1000) / 1000 
+        },
+        {
+          type: 'Square',
+          area: squaresArea,
+          percent: Math.round(squarePercent * 1000) / 1000 
+        },
+        {
+          type: 'Rectangle',
+          area: rectanglesArea,
+          percent:  Math.round(rectanglePercent * 1000) / 1000  
+        },
+        {
+          type: 'Triangle',
+          area: trianglesArea,
+          percent:  Math.round(trianglePercent * 1000) / 1000 
+        },
+      ]
+      return statistics;
+    }
+  },
+  mounted(){
+    axios
+    .get('http://localhost:7000/figures')
+    .then(response => (this.figures = response.data));
+  }
 }
 </script>
 
-<style>
-
+<style scoped>
+  .statistics-section{
+    margin-top: 35px;   
+  }
+  .spinner-section{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+}
 </style>
