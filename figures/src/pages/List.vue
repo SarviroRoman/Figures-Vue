@@ -1,27 +1,47 @@
 <template>
   <div v-if='figures.length' class="container list-section">
-    <div class="overflow-auto">
-      <div class="text-center">
-        <b-table bordered hover striped 
-          id="figures-table"
-          :items="figures"
-          :per-page="perPage"
-          :current-page="currentPage"
-        >
-          <template slot="table-caption">List added figures</template>
-        </b-table>
+    <div class="text-center">
+      <table 
+        class="table table-bordered table-hover table-striped"
+        :per-page="perPage"
+        :current-page="currentPage"
+      >
+        <caption>List added figures</caption>
 
-        <b-pagination v-if='figures.length>limit'
-          align="center"
-          v-model="currentPage"
-          :total-rows="rows"
-          :per-page="perPage"
-          :limit='limit'
-          aria-controls="figures-table"
-        ></b-pagination>
-      </div>
+        <thead>
+          <tr>
+            <th scope="col">id</th>
+            <th scope="col">Type figures</th>
+            <th scope="col">Area</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr v-for="figure in figures.slice((currentPage-1) * limit,(currentPage-1) * limit + limit)" :key="figure.id">
+            <th scope="row">{{ figure.id }}</th>
+            <td> {{ figure.type }} </td>
+            <td> {{ figure.area }} </td>
+            <td>
+              <button class="btn btn-sm btn-outline-danger">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+
+      </table>
+
+      <b-pagination v-if='figures.length>limit'
+        align="center"
+        v-model="currentPage"
+        :total-rows="rows"
+        :per-page="perPage"
+        :limit='limit'
+        aria-controls="figures-table"
+      ></b-pagination>
+
     </div>
   </div>
+  
   <div v-else class="spinner-section">
     <b-spinner variant="primary" label="Loading..."></b-spinner>
   </div>
