@@ -108,12 +108,12 @@ export default {
           this.showAlertDeleteFigure = true;
           this.deleteMessage = `Figures #${id} successfully deleted`;
           this.dismissCountDown = this.dismissSecs;
+
+          if(this.figures.length <= (this.currentPage-1)*this.perPage){
+            --this.currentPage;
+          }
         }
       });
-      
-      if(this.figures.length-1 <= (this.currentPage-1)*this.perPage){
-        --this.currentPage;
-      }
 
     },
     countDownChanged(dismissCountDown) {
