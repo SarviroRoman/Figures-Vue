@@ -10,10 +10,10 @@
           <router-link class="nav-link" to="/" exact>List</router-link>
         </li>
         <li class="nav-item">
-          <router-link class="nav-link" to="/add">Add</router-link>
+          <router-link class="nav-link" to="/AddFigures">Add</router-link>
         </li>
         <li class="nav-item">
-          <router-link class="nav-link" to="/statistics">Statistics</router-link>
+          <router-link class="nav-link" to="/Statistics">Statistics</router-link>
         </li>
       </b-navbar-nav>
 

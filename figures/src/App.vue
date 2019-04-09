@@ -17,6 +17,11 @@ export default {
   name: 'app',
   components: {
     Header
+  },
+  watch: {
+    $route(to) {
+        document.title = to.meta.title || 'Figures';
+    },
   }
 }
 </script>

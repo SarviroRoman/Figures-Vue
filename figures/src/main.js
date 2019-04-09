@@ -15,18 +15,22 @@ Vue.use(VueRouter)
 import list from '@/pages/List'
 import add from '@/pages/Add'
 import statistics from '@/pages/Statistics'
+import NotFound from '@/components/NotFound'
 
 const routes = [
-  { path: '/', name: 'list', component: list },
-  { path: '/add', name: 'add', component: add },
-  { path: '/statistics', name: 'statistics', component: statistics },
+  { path: '/', name: 'List figures', component: list, meta: {title: 'List figures'} },
+  { path: '/AddFigures', name: 'Add figures', component: add, meta: {title: 'Add figures'} },
+  { path: '/Statistics', name: 'Statistics figures', component: statistics, meta: {title: 'Statistics figures'} },
+  { path: '*', name: '404 Not Found', component: NotFound, meta: {title: '404 Not Found'} },
 ]
 
 const router = new VueRouter({
+  mode: 'history',
   routes,
   linkActiveClass: "active",
   linkExactActiveClass: "exact-active",
 })
+
 
 
 new Vue({
