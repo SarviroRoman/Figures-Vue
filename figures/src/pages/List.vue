@@ -18,7 +18,7 @@
         </thead>
 
         <tbody>
-          <tr v-for="figure in figures.slice((currentPage-1) * limit,(currentPage-1) * limit + limit)" :key="figure.id">
+          <tr v-for="figure in figures.slice((currentPage-1) * perPage,(currentPage-1) * perPage + perPage)" :key="figure.id">
             <th scope="row">{{ figure.id }}</th>
             <td> {{ figure.type }} </td>
             <td> {{ figure.area }} </td>
@@ -36,16 +36,13 @@
 
       </table>
 
-      <b-pagination v-if='figures.length>limit'
+      <b-pagination v-if='figures.length>perPage'
         align="center"
         v-model="currentPage"
-        :total-rows="rows"
         :per-page="perPage"
-        :limit='limit'
+        :total-rows="rows"
         aria-controls="figures-table"
       ></b-pagination>
-
-
 
       <b-alert
         :show="dismissCountDown"
@@ -79,9 +76,8 @@ export default {
   name: 'list',
   data() {
     return {
-      perPage: 7,
+      perPage: 5,
       currentPage: 1,
-      limit: 7, 
       figures: [],
       showDeleteSpinner: false,
       deleteMessage: '',
@@ -110,10 +106,15 @@ export default {
           this.figures.splice(index,1);
           this.showDeleteSpinner = false;
           this.showAlertDeleteFigure = true;
-          this.deleteMessage = `Figures ${id} successfully deleted`;
+          this.deleteMessage = `Figures #${id} successfully deleted`;
           this.dismissCountDown = this.dismissSecs;
         }
       });
+      
+      if(this.figures.length-1 <= (this.currentPage-1)*this.perPage){
+        --this.currentPage;
+      }
+
     },
     countDownChanged(dismissCountDown) {
       this.dismissCountDown = dismissCountDown
