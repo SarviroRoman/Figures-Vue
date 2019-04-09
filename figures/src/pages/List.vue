@@ -1,6 +1,18 @@
 <template>
-  <div v-if='figures.length' class="container list-section">
-    <div class="text-center">
+
+  <div v-if='!getFiguresIsSuccess' class="spinner-section">
+    <b-spinner variant="primary" label="Loading..."></b-spinner>
+  </div>
+
+  <div v-else class="container list-section">
+
+    <div v-if="figures.length === 0">
+      <b-alert variant="info" show >
+        <h5 class="d-flex justify-content-center align-content-center flex-wrap waring-text">Added figures not found - <router-link class="nav-link" to="/add">add them now</router-link></h5>
+      </b-alert>
+    </div>
+
+    <div v-else class="text-center">
       <table 
         class="table table-bordered table-hover table-striped"
         :per-page="perPage"
@@ -64,9 +76,7 @@
     </div>
   </div>
   
-  <div v-else class="spinner-section">
-    <b-spinner variant="primary" label="Loading..."></b-spinner>
-  </div>
+  
   
 </template>
 
@@ -79,6 +89,7 @@ export default {
       perPage: 5,
       currentPage: 1,
       figures: [],
+      getFiguresIsSuccess: false,
       showDeleteSpinner: false,
       deleteMessage: '',
       dismissSecs: 10,
@@ -88,7 +99,10 @@ export default {
   mounted(){
     axios
     .get('http://localhost:7000/figures')
-    .then(response => (this.figures = response.data.sort((first,second) => first.area-second.area)));
+    .then(response => {
+      this.figures = response.data.sort((first,second) => first.area-second.area);
+      this.getFiguresIsSuccess = true;
+    });
   },
   computed: {
     rows() {
@@ -137,5 +151,11 @@ export default {
   }
   .deleteAlert{
     margin: 0 50px;
+  }
+  .waring-text{
+    margin-top: 8px;
+  }
+  .nav-link{
+    padding: 0 0.5rem !important;
   }
 </style>

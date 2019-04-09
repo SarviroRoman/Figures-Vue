@@ -1,15 +1,24 @@
 <template>
-  <div v-if='figures.length' class="container statistics-section">
-    <div class="text-center">
+
+  <div v-if='!getFiguresIsSuccess' class="spinner-section">
+    <b-spinner variant="primary" label="Loading..."></b-spinner>
+  </div>
+
+  <div v-else class="container statistics-section">
+
+    <div v-if="figures.length === 0">
+      <b-alert variant="info" show >
+        <h5 class="d-flex justify-content-center align-content-center flex-wrap waring-text">Added figures not found - <router-link class="nav-link" to="/add">add them now</router-link></h5>
+      </b-alert>
+    </div>
+
+    <div v-else class="text-center">
       <b-table bordered hover striped 
         :items="getStatistics"
       >
         <template slot="table-caption">Statistics</template>
       </b-table>
     </div>
-  </div>
-  <div v-else class="spinner-section">
-    <b-spinner variant="primary" label="Loading..."></b-spinner>
   </div>
   
 </template>
@@ -21,6 +30,7 @@ export default {
   data() {
     return {
       figures: [],
+      getFiguresIsSuccess: false,
     }
   },
   computed: {
@@ -88,7 +98,10 @@ export default {
   mounted(){
     axios
     .get('http://localhost:7000/figures')
-    .then(response => (this.figures = response.data));
+    .then(response => {
+      this.figures = response.data;
+      this.getFiguresIsSuccess = true; 
+    });
   }
 }
 </script>
@@ -104,5 +117,11 @@ export default {
     width: 100%;
     height: 100%;
     position: fixed;
-}
+  }
+  .waring-text{
+    margin-top: 8px;
+  }
+  .nav-link{
+    padding: 0 0.5rem !important;
+  }
 </style>
