@@ -11,12 +11,12 @@
           <template slot="table-caption">List added figures</template>
         </b-table>
 
-        <b-pagination
+        <b-pagination v-if='figures.length>limit'
           align="center"
           v-model="currentPage"
           :total-rows="rows"
           :per-page="perPage"
-          :limit=7
+          :limit='limit'
           aria-controls="figures-table"
         ></b-pagination>
       </div>
@@ -36,6 +36,7 @@ export default {
     return {
       perPage: 7,
       currentPage: 1,
+      limit: 7, 
       figures: []
     }
   },
