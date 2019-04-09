@@ -60,16 +60,16 @@ export default {
       figures: []
     }
   },
-  computed: {
-    rows() {
-      return this.figures.length
-    }
-  },
   mounted(){
     axios
     .get('http://localhost:7000/figures')
-    .then(response => (this.figures = response.data));
-  }
+    .then(response => (this.figures = response.data.sort((first,second) => first.area-second.area)));
+  },
+  computed: {
+    rows() {
+      return this.figures.length;
+    }
+  },
 }
 </script>
 
