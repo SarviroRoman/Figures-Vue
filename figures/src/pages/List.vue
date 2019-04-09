@@ -23,7 +23,13 @@
             <td> {{ figure.type }} </td>
             <td> {{ figure.area }} </td>
             <td>
-              <button class="btn btn-sm btn-outline-danger">Delete</button>
+              <button class="btn btn-sm btn-outline-danger" @click="deleteFigure(figure.id)" :disabled="showDeleteSpinner">
+                Delete
+                <template v-if="showDeleteSpinner">
+                  <b-spinner small type="grow"></b-spinner>
+                  <span class="sr-only">Loading...</span>
+                </template>
+              </button>
             </td>
           </tr>
         </tbody>
@@ -38,6 +44,25 @@
         :limit='limit'
         aria-controls="figures-table"
       ></b-pagination>
+
+
+
+      <b-alert
+        :show="dismissCountDown"
+        dismissible
+        variant="success"
+        @dismissed="dismissCountDown=0"
+        @dismiss-count-down="countDownChanged"
+        class="deleteAlert"
+      >
+        <p>{{deleteMessage}}</p>
+        <b-progress
+          variant="success"
+          :max="dismissSecs"
+          :value="dismissCountDown"
+          height="4px"
+        ></b-progress>
+      </b-alert>
 
     </div>
   </div>
@@ -57,7 +82,11 @@ export default {
       perPage: 7,
       currentPage: 1,
       limit: 7, 
-      figures: []
+      figures: [],
+      showDeleteSpinner: false,
+      deleteMessage: '',
+      dismissSecs: 10,
+      dismissCountDown: 0,
     }
   },
   mounted(){
@@ -70,6 +99,26 @@ export default {
       return this.figures.length;
     }
   },
+  methods: {
+    deleteFigure: function (id) {
+      this.showDeleteSpinner = true;
+      axios
+      .delete(`http://localhost:7000/figures?id=${id}`)
+      .then(response => {
+        if(response.data.success){
+          const index = this.figures.findIndex(figure => figure.id === id);
+          this.figures.splice(index,1);
+          this.showDeleteSpinner = false;
+          this.showAlertDeleteFigure = true;
+          this.deleteMessage = `Figures ${id} successfully deleted`;
+          this.dismissCountDown = this.dismissSecs;
+        }
+      });
+    },
+    countDownChanged(dismissCountDown) {
+      this.dismissCountDown = dismissCountDown
+    },
+  }
 }
 </script>
 
@@ -84,5 +133,8 @@ export default {
     width: 100%;
     height: 100%;
     position: fixed;
-}
+  }
+  .deleteAlert{
+    margin: 0 50px;
+  }
 </style>
