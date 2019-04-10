@@ -1,8 +1,6 @@
 <template>
 
-  <div v-if='!getFiguresIsSuccess' class="spinner-section">
-    <b-spinner variant="primary" label="Loading..."></b-spinner>
-  </div>
+  <Spinner v-if='!getFiguresIsSuccess'></Spinner>
 
   <div v-else class="container statistics-section">
 
@@ -25,8 +23,13 @@
 
 <script>
 import axios from 'axios'
+import Spinner from '@/components/Spinner'
+
 export default {
   name: 'statistics',
+  components: {
+    Spinner
+  },
   data() {
     return {
       figures: [],
@@ -109,14 +112,6 @@ export default {
 <style scoped>
   .statistics-section{
     margin-top: 35px;   
-  }
-  .spinner-section{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-    position: fixed;
   }
   .waring-text{
     margin-top: 8px;
