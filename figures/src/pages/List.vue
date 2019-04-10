@@ -4,11 +4,7 @@
 
   <div v-else class="container list-section">
 
-    <div v-if="figures.length === 0">
-      <b-alert variant="info" show >
-        <h5 class="d-flex justify-content-center align-content-center flex-wrap waring-text">Added figures not found - <router-link class="nav-link" to="/AddFigures">add them now</router-link></h5>
-      </b-alert>
-    </div>
+    <NoFiguresAlert v-if="figures.length === 0"></NoFiguresAlert>
 
     <div v-else class="text-center">
       <table 
@@ -81,11 +77,13 @@
 <script>
 import axios from 'axios'
 import Spinner from '@/components/Spinner'
+import NoFiguresAlert from '@/components/NoFiguresAlert'
 
 export default {
   name: 'list',
   components: {
-    Spinner
+    Spinner,
+    NoFiguresAlert,
   },
   data() {
     return {
@@ -147,11 +145,5 @@ export default {
   }
   .deleteAlert{
     margin: 0 50px;
-  }
-  .waring-text{
-    margin-top: 8px;
-  }
-  .nav-link{
-    padding: 0 0.5rem !important;
   }
 </style>
