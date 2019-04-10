@@ -8,7 +8,7 @@
 
     <div v-if="figures.length === 0">
       <b-alert variant="info" show >
-        <h5 class="d-flex justify-content-center align-content-center flex-wrap waring-text">Added figures not found - <router-link class="nav-link" to="/add">add them now</router-link></h5>
+        <h5 class="d-flex justify-content-center align-content-center flex-wrap waring-text">Added figures not found - <router-link class="nav-link" to="/AddFigures">add them now</router-link></h5>
       </b-alert>
     </div>
 
