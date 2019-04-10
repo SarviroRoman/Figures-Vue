@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'No Figures Alert'
+  name: 'NoFiguresAlert'
 }
 </script>
 
