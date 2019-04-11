@@ -31,8 +31,7 @@ const routes = [
     children: [
       {
         path: '',
-        component: CircleComponent,
-        meta: {title: 'Add figures | Circle'}
+        redirect: '/AddFigures/Circle',
       },
       {
         path: 'Circle',

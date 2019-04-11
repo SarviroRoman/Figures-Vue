@@ -3,13 +3,11 @@
     <div class="add-figures-section">
       <div class="row">
         <div class="col-3">
-          
-          
           <b-list-group class="text-center">
-            <b-list-group-item><router-link class="nav-link" to="/AddFigures/Circle">Circle</router-link></b-list-group-item>
-            <b-list-group-item><router-link class="nav-link" to="/AddFigures/Square">Square</router-link></b-list-group-item>
-            <b-list-group-item><router-link class="nav-link" to="/AddFigures/Rectangle">Rectangle</router-link></b-list-group-item>
-            <b-list-group-item><router-link class="nav-link" to="/AddFigures/Triangle">Triangle</router-link></b-list-group-item>
+            <b-list-group-item router-link to="/AddFigures/Circle">Circle</b-list-group-item>
+            <b-list-group-item router-link to="/AddFigures/Square">Square</b-list-group-item>
+            <b-list-group-item router-link to="/AddFigures/Rectangle">Rectangle</b-list-group-item>
+            <b-list-group-item router-link to="/AddFigures/Triangle">Triangle</b-list-group-item>
           </b-list-group>
         </div>
         <div class="col-9 text-center">
