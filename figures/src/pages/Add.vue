@@ -15,7 +15,7 @@
             <router-view v-on:addFigures='addFigures' :responseIsSuccess='responseIsSuccess'></router-view>
           <!-- </keep-alive> -->
 
-          <b-alert
+          <!-- <b-alert
             :show="dismissCountDown"
             dismissible
             variant="success"
@@ -30,6 +30,10 @@
               :value="dismissCountDown"
               height="4px"
             ></b-progress>
+          </b-alert> -->
+
+          <b-alert v-model="showAddAlert" variant="success" class="addAlert" dismissible>
+            <p class="text-center">{{ textAlertMessage }}</p>
           </b-alert>
           
         </div>
@@ -49,9 +53,7 @@ export default {
     return {
       responseIsSuccess: false,
       textAlertMessage: String,
-      showAlert: false,
-      dismissSecs: 10,
-      dismissCountDown: 0,
+      showAddAlert: false,
       APP
     }
   },
@@ -69,13 +71,11 @@ export default {
         if(response.data.success){
           this.responseIsSuccess = false;
           this.textAlertMessage = `${type} #${response.data.id} with ${area} area successfully added`;
-          this.dismissCountDown = this.dismissSecs;        
-          }
+          this.showAddAlert = true;
+        }
       })
     },
-        countDownChanged(dismissCountDown) {
-      this.dismissCountDown = dismissCountDown
-    },
+
   }
 }
 </script>
@@ -84,7 +84,10 @@ export default {
   .add-figures-section{
     margin-top: 35px;   
   }
-  .deleteAlert{
-    margin: 0 50px;
+  .addAlert{
+    margin: 0 50px; 
+  }
+  .addAlert p{
+    margin-bottom: 0px;
   }
 </style>

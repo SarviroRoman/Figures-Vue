@@ -47,21 +47,8 @@
         aria-controls="figures-table"
       ></b-pagination>
 
-      <b-alert
-        :show="dismissCountDown"
-        dismissible
-        variant="success"
-        @dismissed="dismissCountDown=0"
-        @dismiss-count-down="countDownChanged"
-        class="deleteAlert"
-      >
-        <p>{{deleteMessage}}</p>
-        <b-progress
-          variant="success"
-          :max="dismissSecs"
-          :value="dismissCountDown"
-          height="4px"
-        ></b-progress>
+      <b-alert v-model="showDeleteAlert" variant="success" class="deleteAlert" dismissible>
+        <p class="text-center">{{ deleteMessage }}</p>
       </b-alert>
 
     </div>
@@ -94,8 +81,7 @@ export default {
       getFiguresIsSuccess: false,
       showDeleteSpinner: false,
       deleteMessage: '',
-      dismissSecs: 10,
-      dismissCountDown: 0,
+      showDeleteAlert: false,
       APP
     }
   },
@@ -124,7 +110,7 @@ export default {
           this.showDeleteSpinner = false;
           this.showAlertDeleteFigure = true;
           this.deleteMessage = `Figures #${id} successfully deleted`;
-          this.dismissCountDown = this.dismissSecs;
+          this.showDeleteAlert = true;
 
           if(this.figures.length <= (this.currentPage-1)*this.perPage){
             --this.currentPage;
@@ -133,10 +119,6 @@ export default {
       });
 
     },
-    countDownChanged(dismissCountDown) {
-      this.dismissCountDown = dismissCountDown
-    },
-
   }
 }
 </script>
@@ -147,5 +129,8 @@ export default {
   }
   .deleteAlert{
     margin: 0 50px;
+  }
+  .deleteAlert p{
+    margin-bottom: 0px;
   }
 </style>
