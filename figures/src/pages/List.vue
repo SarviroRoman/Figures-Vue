@@ -31,10 +31,7 @@
             <td>
               <button class="btn btn-sm btn-outline-danger" @click="deleteFigure(figure.id)" :disabled="showDeleteSpinner">
                 Delete
-                <template v-if="showDeleteSpinner">
-                  <b-spinner small type="grow"></b-spinner>
-                  <span class="sr-only">Loading...</span>
-                </template>
+                <ButtonSpinner v-if="showDeleteSpinner"></ButtonSpinner>
               </button>
             </td>
           </tr>
@@ -78,12 +75,14 @@
 import axios from 'axios'
 import Spinner from '@/components/Spinner'
 import NoFiguresAlert from '@/components/NoFiguresAlert'
+import ButtonSpinner from '@/components/ButtonSpinner'
 
 export default {
   name: 'list',
   components: {
     Spinner,
     NoFiguresAlert,
+    ButtonSpinner
   },
   data() {
     return {

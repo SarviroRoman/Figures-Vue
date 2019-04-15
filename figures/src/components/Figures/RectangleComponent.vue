@@ -88,10 +88,7 @@
               :disabled='!x1State || !y1State || !x2State || !y2State || responseIsSuccess'
             >
               Add Rectangle
-              <template v-if="responseIsSuccess">
-                <b-spinner small type="grow"></b-spinner>
-                <span class="sr-only">Loading...</span>
-              </template>
+              <ButtonSpinner v-if="responseIsSuccess"></ButtonSpinner>
             </b-button>         
 
           </b-form>
@@ -110,12 +107,14 @@
 <script>
 import TitleMessage from '@/components/Figures/TitleMessage'
 import FiguresInformation from '@/components/Figures/FiguresInformation'
+import ButtonSpinner from '@/components/ButtonSpinner'
 
 export default {
   name: 'Rectangle',
   components: {
     TitleMessage,
     FiguresInformation,
+    ButtonSpinner
   },
   props: ['responseIsSuccess'],
   data() {
