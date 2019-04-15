@@ -76,6 +76,8 @@ import axios from 'axios'
 import Spinner from '@/components/Spinner'
 import NoFiguresAlert from '@/components/NoFiguresAlert'
 import ButtonSpinner from '@/components/ButtonSpinner'
+import { APP } from '../application-constants'
+
 
 export default {
   name: 'list',
@@ -94,11 +96,12 @@ export default {
       deleteMessage: '',
       dismissSecs: 10,
       dismissCountDown: 0,
+      APP
     }
   },
   mounted(){
     axios
-    .get('http://localhost:7000/figures')
+    .get(`${APP.endpoints.baseUrl}${APP.endpoints.figures}`)
     .then(response => {
       this.figures = response.data.sort((first,second) => first.area-second.area);
       this.getFiguresIsSuccess = true;
@@ -113,7 +116,7 @@ export default {
     deleteFigure: function (id) {
       this.showDeleteSpinner = true;
       axios
-      .delete(`http://localhost:7000/figures?id=${id}`)
+      .delete(`${APP.endpoints.baseUrl}${APP.endpoints.figures}?id=${id}`)
       .then(response => {
         if(response.data.success){
           const index = this.figures.findIndex(figure => figure.id === id);

@@ -2,7 +2,7 @@
   <div class="container row">
     <div class="col-md-12 mb-12">
 
-      <TitleMessage typeFigures='Circle'></TitleMessage>
+      <TitleMessage :typeFigures='APP.types.circle'></TitleMessage>
 
       <div class="row form-content">
 
@@ -30,7 +30,7 @@
               :variant='radiusState ? "success": "danger"' 
               :disabled='!radiusState || responseIsSuccess'
             >
-              Add Circle
+              Add new {{APP.types.circle}}
               <ButtonSpinner v-if="responseIsSuccess"></ButtonSpinner>
             </b-button>
 
@@ -51,6 +51,7 @@
 import TitleMessage from '@/components/Figures/TitleMessage'
 import FiguresInformation from '@/components/Figures/FiguresInformation'
 import ButtonSpinner from '@/components/ButtonSpinner'
+import { APP } from '../../application-constants'
 
 export default {
   name: 'CircleComponent',
@@ -65,6 +66,7 @@ export default {
       radius: 10,
       minRadius: 0,
       maxRadius: 10000,
+      APP
     }
   },
   computed: {
@@ -85,7 +87,7 @@ export default {
     addCircle(evt) {
       evt.preventDefault();
       const area = this.getCircleArea();
-      this.$emit('addFigures', 'Circle', area);
+      this.$emit('addFigures', APP.types.circle, area);
     },
     
   }

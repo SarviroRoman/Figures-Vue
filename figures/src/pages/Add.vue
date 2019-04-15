@@ -4,10 +4,10 @@
       <div class="row">
         <div class="col-3">
           <b-list-group class="text-center">
-            <b-list-group-item router-link to="/AddFigures/Circle">Circle</b-list-group-item>
-            <b-list-group-item router-link to="/AddFigures/Square">Square</b-list-group-item>
-            <b-list-group-item router-link to="/AddFigures/Rectangle">Rectangle</b-list-group-item>
-            <b-list-group-item router-link to="/AddFigures/Triangle">Triangle</b-list-group-item>
+            <b-list-group-item router-link :to='APP.routes.pathAddFigures+"/"+APP.types.circle'>{{ APP.types.circle }}</b-list-group-item>
+            <b-list-group-item router-link :to='APP.routes.pathAddFigures+"/"+APP.types.square'>{{ APP.types.square }}</b-list-group-item>
+            <b-list-group-item router-link :to='APP.routes.pathAddFigures+"/"+APP.types.rectangle'>{{ APP.types.rectangle }}</b-list-group-item>
+            <b-list-group-item router-link :to='APP.routes.pathAddFigures+"/"+APP.types.triangle'>{{ APP.types.triangle }}</b-list-group-item>
           </b-list-group>
         </div>
         <div class="col-9 text-center">
@@ -23,7 +23,7 @@
             @dismiss-count-down="countDownChanged"
             class="deleteAlert"
           >
-            <p class="text-center">{{textAlertMessage}}</p>
+            <p class="text-center">{{ textAlertMessage }}</p>
             <b-progress
               variant="success"
               :max="dismissSecs"
@@ -41,6 +41,7 @@
 
 <script>
 import axios from 'axios'
+import { APP } from '../application-constants'
 
 export default {
   name: 'add',
@@ -51,6 +52,7 @@ export default {
       showAlert: false,
       dismissSecs: 10,
       dismissCountDown: 0,
+      APP
     }
   },
   methods: {
@@ -62,7 +64,7 @@ export default {
       };
 
       axios
-      .post(`http://localhost:7000/figures`, newFigure)
+      .post(`${APP.endpoints.baseUrl}${APP.endpoints.figures}`, newFigure)
       .then(response => {
         if(response.data.success){
           this.responseIsSuccess = false;
@@ -81,5 +83,8 @@ export default {
 <style scoped>
   .add-figures-section{
     margin-top: 35px;   
+  }
+  .deleteAlert{
+    margin: 0 50px;
   }
 </style>

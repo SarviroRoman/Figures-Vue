@@ -2,13 +2,13 @@
   <div class="container row">
     <div class="col-md-12 mb-12">
 
-      <TitleMessage typeFigures='Square'></TitleMessage>
+      <TitleMessage :typeFigures='APP.types.square'></TitleMessage>
 
       <div class="row form-content">
 
         <div class='col-md-6 mb-6'>
           <b-form @submit="addSquare" class="form-row">
-          <label for='square' class="text-left">Square length:</label>
+          <label for='square' class="text-left">Side length:</label>
           <b-form-input 
             id='square' 
             v-model.number='square'
@@ -29,7 +29,7 @@
             :variant='squareState ? "success": "danger"' 
             :disabled='!squareState || responseIsSuccess'
           >
-            Add Square
+            Add new {{ APP.types.square }}
             <ButtonSpinner v-if="responseIsSuccess"></ButtonSpinner>
           </b-button>
 
@@ -50,6 +50,7 @@
 import TitleMessage from '@/components/Figures/TitleMessage'
 import FiguresInformation from '@/components/Figures/FiguresInformation'
 import ButtonSpinner from '@/components/ButtonSpinner'
+import { APP } from '../../application-constants'
 
 export default {
   name: 'Square',
@@ -64,6 +65,7 @@ export default {
       square: 10,
       minSquare: 0,
       maxSquare: 10000,
+      APP
     }
   },
   computed: {
@@ -84,7 +86,7 @@ export default {
     addSquare(evt) {
       evt.preventDefault();
       const area = this.getSquareArea();
-      this.$emit('addFigures', 'Square', area);
+      this.$emit('addFigures', APP.types.square, area);
     },
     
   }

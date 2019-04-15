@@ -1,12 +1,19 @@
 <template>
   <b-alert variant="info" show >
-    <h5 class="d-flex justify-content-center align-content-center flex-wrap waring-text">Added figures not found - <router-link class="nav-link" to="/AddFigures">add them now</router-link></h5>
+    <h5 class="d-flex justify-content-center align-content-center flex-wrap waring-text">Added figures not found - <router-link class="nav-link" :to='APP.routes.pathAddFigures'>add them now</router-link></h5>
   </b-alert>
 </template>
 
 <script>
+import { APP } from '@/application-constants'
+
 export default {
-  name: 'NoFiguresAlert'
+  name: 'NoFiguresAlert',
+  data(){
+    return {
+      APP
+    }
+  }
 }
 </script>
 

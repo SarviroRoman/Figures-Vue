@@ -21,6 +21,7 @@
 import axios from 'axios'
 import Spinner from '@/components/Spinner'
 import NoFiguresAlert from '@/components/NoFiguresAlert'
+import { APP } from '../application-constants'
 
 export default {
   name: 'statistics',
@@ -32,6 +33,7 @@ export default {
     return {
       figures: [],
       getFiguresIsSuccess: false,
+      APP
     }
   },
   computed: {
@@ -42,25 +44,25 @@ export default {
       let rectanglesArea = 0; 
       let trianglesArea = 0; 
 
-      const Circles = this.figures.filter(figure => figure.type === 'Circle'); 
+      const Circles = this.figures.filter(figure => figure.type === APP.types.circle); 
       for (let item of Circles){ 
         circlesArea += item.area; 
         totalArea += item.area; 
       } 
 
-      const Squares = this.figures.filter(figure => figure.type === 'Square'); 
+      const Squares = this.figures.filter(figure => figure.type === APP.types.square); 
       for (let item of Squares){ 
         squaresArea += item.area; 
         totalArea += item.area; 
       } 
 
-      const Rectangles = this.figures.filter(figure => figure.type === 'Rectangle'); 
+      const Rectangles = this.figures.filter(figure => figure.type === APP.types.rectangle); 
       for (let item of Rectangles){ 
         rectanglesArea += item.area; 
         totalArea += item.area; 
       } 
 
-      const Triangles = this.figures.filter(figure => figure.type === 'Triangle'); 
+      const Triangles = this.figures.filter(figure => figure.type === APP.types.triangle); 
       for (let item of Triangles){ 
         trianglesArea += item.area; 
         totalArea += item.area; 
@@ -73,22 +75,22 @@ export default {
 
       const statistics = [
         {
-          type: 'Circle',
+          type: APP.types.circle,
           area: circlesArea,
           percent: Math.round(circlePercent * 1000) / 1000 
         },
         {
-          type: 'Square',
+          type: APP.types.square,
           area: squaresArea,
           percent: Math.round(squarePercent * 1000) / 1000 
         },
         {
-          type: 'Rectangle',
+          type: APP.types.rectangle,
           area: rectanglesArea,
           percent:  Math.round(rectanglePercent * 1000) / 1000  
         },
         {
-          type: 'Triangle',
+          type: APP.types.triangle,
           area: trianglesArea,
           percent:  Math.round(trianglePercent * 1000) / 1000 
         },
@@ -98,7 +100,7 @@ export default {
   },
   mounted(){
     axios
-    .get('http://localhost:7000/figures')
+    .get(`${APP.endpoints.baseUrl}${APP.endpoints.figures}`)
     .then(response => {
       this.figures = response.data;
       this.getFiguresIsSuccess = true; 

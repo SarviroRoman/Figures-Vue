@@ -2,7 +2,7 @@
   <div class="container row">
     <div class="col-md-12 mb-12">
 
-      <TitleMessage typeFigures='Triangle'></TitleMessage>
+      <TitleMessage :typeFigures='APP.types.triangle'></TitleMessage>
 
       <div class="row form-content">
 
@@ -66,7 +66,7 @@
               :variant='length1State && length2State && length3State && triangleIsValid ? "success": "danger"' 
               :disabled='!length1State || !length2State || !length3State || !triangleIsValid || responseIsSuccess'
             >
-              Add Triangle
+              Add new {{ APP.types.triangle }}
               <ButtonSpinner v-if="responseIsSuccess"></ButtonSpinner>
             </b-button>
 
@@ -90,6 +90,7 @@
 import TitleMessage from '@/components/Figures/TitleMessage'
 import FiguresInformation from '@/components/Figures/FiguresInformation'
 import ButtonSpinner from '@/components/ButtonSpinner'
+import { APP } from '../../application-constants'
 
 export default {
   name: 'Triangle',
@@ -106,6 +107,7 @@ export default {
       length3: 5,
       minLength: 0,
       maxLength: 10000,
+      APP
     }
   },
   computed: {
@@ -145,7 +147,7 @@ export default {
     addTriangle(evt) {
       evt.preventDefault();
       const area = this.getTriangleArea();
-      this.$emit('addFigures', 'Triangle', area);
+      this.$emit('addFigures', APP.types.triangle, area);
     },
     
   }

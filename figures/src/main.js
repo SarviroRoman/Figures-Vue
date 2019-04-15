@@ -22,40 +22,42 @@ import RectangleComponent from '@/components/Figures/RectangleComponent'
 import SquareComponent from '@/components/Figures/SquareComponent'
 import TriangleComponent from '@/components/Figures/TriangleComponent'
 
+import { APP } from '@/application-constants'
+
 const routes = [
   { path: '/', component: list, meta: {title: 'List figures'} },
   { 
-    path: '/AddFigures',
+    path: `${APP.routes.pathAddFigures}`,
     component: add,
     meta: {title: 'Add figures'},
     children: [
       {
         path: '',
-        redirect: '/AddFigures/Circle',
+        redirect: `${APP.routes.pathAddFigures}/${APP.types.circle}`,
       },
       {
-        path: 'Circle',
+        path: `${APP.types.circle}`,
         component: CircleComponent,
-        meta: {title: 'Add figures | Circle'}
+        meta: {title: `Add figures | ${APP.types.circle}`}
       },
       {
-        path: 'Rectangle',
+        path: `${APP.types.rectangle}`,
         component: RectangleComponent,
-        meta: {title: 'Add figures | Rectangle'}
+        meta: {title: `Add figures | ${APP.types.rectangle}`}
       },
       {
-        path: 'Square',
+        path: `${APP.types.square}`,
         component: SquareComponent,
-        meta: {title: 'Add figures | Square'}
+        meta: {title: `Add figures | ${APP.types.square}`}
       },
       {
-        path: 'Triangle',
+        path: `${APP.types.triangle}`,
         component: TriangleComponent,
-        meta: {title: 'Add figures | Triangle'}
+        meta: {title: `Add figures | ${APP.types.triangle}`}
       },
     ]
   },
-  { path: '/Statistics', component: statistics, meta: {title: 'Statistics figures'} },
+  { path: `${APP.routes.pathStatistics}`, component: statistics, meta: {title: 'Statistics figures'} },
   { path: '*', component: NotFound, meta: {title: '404 Not Found'} },
 ]
 

@@ -10,10 +10,10 @@
           <router-link class="nav-link" to="/" exact>List</router-link>
         </li>
         <li class="nav-item">
-          <router-link class="nav-link" to="/AddFigures">Add</router-link>
+          <router-link class="nav-link" :to='APP.routes.pathAddFigures'>Add</router-link>
         </li>
         <li class="nav-item">
-          <router-link class="nav-link" to="/Statistics">Statistics</router-link>
+          <router-link class="nav-link" :to='APP.routes.pathStatistics'>Statistics</router-link>
         </li>
       </b-navbar-nav>
 
@@ -23,8 +23,15 @@
 </template>
 
 <script>
+import { APP } from '@/application-constants'
+
 export default {
-  name: 'Header'
+  name: 'Header',
+  data(){
+    return{
+      APP
+    }
+  }
 }
 </script>
 

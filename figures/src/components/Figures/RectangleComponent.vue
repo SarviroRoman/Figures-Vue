@@ -2,7 +2,7 @@
   <div class="container row">
     <div class="col-md-12 mb-12">
 
-      <TitleMessage typeFigures='Rectangle'></TitleMessage>
+      <TitleMessage :typeFigures='APP.types.rectangle'></TitleMessage>
 
       <div class="row form-content">
 
@@ -87,7 +87,7 @@
               :variant='x1State && y1State && x2State && y2State ? "success": "danger"' 
               :disabled='!x1State || !y1State || !x2State || !y2State || responseIsSuccess'
             >
-              Add Rectangle
+              Add new {{ APP.types.rectangle }}
               <ButtonSpinner v-if="responseIsSuccess"></ButtonSpinner>
             </b-button>         
 
@@ -108,6 +108,7 @@
 import TitleMessage from '@/components/Figures/TitleMessage'
 import FiguresInformation from '@/components/Figures/FiguresInformation'
 import ButtonSpinner from '@/components/ButtonSpinner'
+import { APP } from '../../application-constants'
 
 export default {
   name: 'Rectangle',
@@ -125,6 +126,7 @@ export default {
       y2: 20,
       minCoordinate: -10000,
       maxCoordinate: 10000,
+      APP
     }
   },
   computed: {
@@ -166,7 +168,7 @@ export default {
     addRectangle(evt) {
       evt.preventDefault();
       const area = this.getRectangleArea();
-      this.$emit('addFigures', 'Rectangle', area);
+      this.$emit('addFigures', APP.types.rectangle, area);
     },
     
   }
