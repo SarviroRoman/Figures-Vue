@@ -15,23 +15,6 @@
             <router-view v-on:addFigures='addFigures' :responseIsSuccess='responseIsSuccess'></router-view>
           <!-- </keep-alive> -->
 
-          <!-- <b-alert
-            :show="dismissCountDown"
-            dismissible
-            variant="success"
-            @dismissed="dismissCountDown=0"
-            @dismiss-count-down="countDownChanged"
-            class="deleteAlert"
-          >
-            <p class="text-center">{{ textAlertMessage }}</p>
-            <b-progress
-              variant="success"
-              :max="dismissSecs"
-              :value="dismissCountDown"
-              height="4px"
-            ></b-progress>
-          </b-alert> -->
-
           <b-alert v-model="showAddAlert" variant="success" class="addAlert" dismissible>
             <p class="text-center">{{ textAlertMessage }}</p>
           </b-alert>
