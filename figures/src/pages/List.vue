@@ -29,7 +29,7 @@
             <td> {{ figure.type }} </td>
             <td> {{ figure.area }} </td>
             <td>
-              <button class="btn btn-sm btn-outline-danger" @click="deleteFigure(figure.id)" :disabled="showDeleteSpinner">
+              <button class="btn btn-sm btn-outline-danger" @click="openDelModal(figure.id)" :disabled="showDeleteSpinner">
                 Delete
                 <ButtonSpinner v-if="showDeleteSpinner"></ButtonSpinner>
               </button>
@@ -50,6 +50,25 @@
       <b-alert v-model="showDeleteAlert" variant="success" class="deleteAlert" dismissible>
         <p class="text-center">{{ deleteMessage }}</p>
       </b-alert>
+
+      <b-modal 
+        centered 
+        title="Figure deletion" 
+        ref="delModalRef" 
+        ok-variant="outline-danger"
+        ok-title='Delete' 
+        @ok="deleteFigure()" 
+      >
+
+        <p class="my-3">
+          <strong>Are you sure you want to delete this figure?</strong>
+          <br />
+          All information associated to this figure will be permanently deleted.
+          <br />
+          <span class="text-danger">This operation can not be undone.</span>
+        </p>
+
+      </b-modal>
 
     </div>
   </div>
@@ -75,6 +94,7 @@ export default {
   },
   data() {
     return {
+      APP,
       perPage: 5,
       currentPage: 1,
       figures: [],
@@ -82,7 +102,7 @@ export default {
       showDeleteSpinner: false,
       deleteMessage: '',
       showDeleteAlert: false,
-      APP
+      currentIdDeleteFigure: Number,
     }
   },
   mounted(){
@@ -99,7 +119,12 @@ export default {
     }
   },
   methods: {
-    deleteFigure: function (id) {
+    openDelModal: function(id){
+      this.currentIdDeleteFigure = id;
+      this.$refs.delModalRef.show();
+    },
+    deleteFigure: function () {
+      const id = this.currentIdDeleteFigure;
       this.showDeleteSpinner = true;
       axios
       .delete(`${APP.endpoints.baseUrl}${APP.endpoints.figures}?id=${id}`)
@@ -117,7 +142,6 @@ export default {
           }
         }
       });
-
     },
   }
 }
