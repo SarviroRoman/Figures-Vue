@@ -7,10 +7,20 @@
     <NoFiguresAlert v-if="figures.length === 0"></NoFiguresAlert>
 
     <div v-else class="text-center">
-      <b-table bordered hover striped 
+      <b-table 
+        bordered
+        hover
+        striped
+        fixed
+        caption-top
+        :fields="fields"
         :items="getStatistics"
       >
         <template slot="table-caption">Statistics</template>
+        <template slot="percent" slot-scope="data">
+          {{ data.item.percent }}%
+        </template>
+        
       </b-table>
     </div>
   </div>
@@ -33,7 +43,22 @@ export default {
     return {
       figures: [],
       getFiguresIsSuccess: false,
-      APP
+      APP,
+      fields: [
+        {
+          key: 'type',
+          label: 'Figure type',
+          sortable: true
+        },
+        {
+          key: 'area',
+          sortable: true
+        },
+        {
+          key: 'percent',
+          sortable: true,
+        },
+      ]
     }
   },
   computed: {
@@ -111,6 +136,6 @@ export default {
 
 <style scoped>
   .statistics-section{
-    margin-top: 35px;   
+    margin-top: 15px;   
   }
 </style>
