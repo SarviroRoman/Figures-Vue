@@ -7,39 +7,29 @@
     <NoFiguresAlert v-if="figures.length === 0"></NoFiguresAlert>
 
     <div v-else class="text-center">
-      <table 
-        class="table table-bordered table-hover table-striped"
+      <b-table 
+        bordered
+        striped
+        hover
+        fixed
+        caption-top
         :per-page="perPage"
         :current-page="currentPage"
+        :fields="fields"
+        :items='figures'
       >
-        <caption>List added figures</caption>
+        <template slot="table-caption">List added figures</template>
 
-        <thead>
-          <tr>
-            <th scope="col">id</th>
-            <th scope="col">Type figures</th>
-            <th scope="col">Area</th>
-            <th scope="col">Actions</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <tr v-for="figure in figures.slice((currentPage-1) * perPage,(currentPage-1) * perPage + perPage)" :key="figure.id">
-            <th scope="row">{{ figure.id }}</th>
-            <td> {{ figure.type }} </td>
-            <td> {{ figure.area }} </td>
-            <td>
-              <button class="btn btn-sm btn-outline-danger" @click="openDelModal(figure.id)" :disabled="showDeleteSpinner">
-                Delete
-                <ButtonSpinner v-if="showDeleteSpinner"></ButtonSpinner>
-              </button>
-            </td>
-          </tr>
-        </tbody>
-
-      </table>
+        <template slot="actions" slot-scope="data">
+          <button class="btn btn-sm btn-outline-danger" @click="openDelModal(data.item.id)" :disabled="showDeleteSpinner">
+            Delete
+            <ButtonSpinner v-if="showDeleteSpinner"></ButtonSpinner>
+          </button>
+        </template>
+      </b-table>
 
       <b-pagination v-if='figures.length>perPage'
+        class="list-pagination"
         align="center"
         v-model="currentPage"
         :per-page="perPage"
@@ -103,6 +93,25 @@ export default {
       deleteMessage: '',
       showDeleteAlert: false,
       currentIdDeleteFigure: Number,
+      fields: [
+        {
+          key: 'id',
+          sortable: true
+        },
+        {
+          key: 'type',
+          label: 'Figure type',
+          sortable: true
+        },
+        {
+          key: 'area',
+          sortable: true,
+        },
+        {
+          key: 'actions',
+          sortable: false
+        }
+      ]
     }
   },
   mounted(){
@@ -149,10 +158,13 @@ export default {
 
 <style scoped>
   .list-section{
-    margin-top: 35px;   
+    margin-top: 15px;   
   }
   .deleteAlert{
-    margin: 0 50px;
+    margin: 25px 50px;
+  }
+  .list-pagination{
+    margin-top: 25px;
   }
   .deleteAlert p{
     margin-bottom: 0px;
