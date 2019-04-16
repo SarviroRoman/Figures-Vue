@@ -21,11 +21,28 @@
         <template slot="table-caption">List added figures</template>
 
         <template slot="actions" slot-scope="data">
+
           <button class="btn btn-sm btn-outline-danger" @click="openDelModal(data.item.id)" :disabled="showDeleteSpinner">
             Delete
             <ButtonSpinner v-if="showDeleteSpinner"></ButtonSpinner>
           </button>
+
+          <button class="btn edit-btn btn-sm btn-outline-warning" @click="data.toggleDetails">
+            Edit
+          </button>
+
         </template>
+
+        <template slot="row-details" slot-scope="data">
+        <b-card>
+          <b-row class="mb-2">
+            <b-col sm="3" class="text-sm-right"><b>area:</b></b-col>
+            <b-col>{{ data.item.area }}</b-col>
+          </b-row>
+          <button class="btn btn-sm btn-outline-dark" @click="data.toggleDetails">Close</button>
+        </b-card>
+      </template>
+
       </b-table>
 
       <b-pagination v-if='figures.length>perPage'
@@ -168,5 +185,8 @@ export default {
   }
   .deleteAlert p{
     margin-bottom: 0px;
+  }
+  .edit-btn{
+    margin-left: 10px;
   }
 </style>
