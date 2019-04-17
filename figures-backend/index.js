@@ -13,23 +13,44 @@ let figures = [
   {
     id: 1,
     type: 'Circle',
-    area: 10,
+    area: 314.1593,
+    data: {
+      radius: 10
+    },
   },
+
   {
     id: 2,
     type: 'Square',
-    area: 25,
+    area: 100,
+    data: {
+      length: 10
+    },
   },
+
   {
     id: 3,
     type: 'Rectangle',
-    area: 21,
+    area: 100,
+    data: {
+      x1: 10,
+      y1: 10,
+      x2: 20,
+      y2: 20,
+    },
   },
+
   {
     id: 4,
     type: 'Triangle',
-    area: 19,
+    area: 6,
+    data: {
+      length1: 3,
+      length2: 4,
+      length3: 5,
+    },
   },
+
 ];
 
 app.get('/figures', (request, response) => {
