@@ -14,10 +14,6 @@
           <!-- <keep-alive> -->
             <router-view v-on:addFigures='addFigures' :responseIsSuccess='responseIsSuccess'></router-view>
           <!-- </keep-alive> -->
-
-          <b-alert v-model="showAddAlert" variant="success" class="addAlert" dismissible>
-            <p class="text-center">{{ textAlertMessage }}</p>
-          </b-alert>
           
         </div>
       </div>
@@ -29,14 +25,13 @@
 <script>
 import axios from 'axios'
 import { APP } from '../application-constants'
+import swal from 'sweetalert'
 
 export default {
   name: 'add',
   data() {
     return {
       responseIsSuccess: false,
-      textAlertMessage: String,
-      showAddAlert: false,
       APP
     }
   },
@@ -53,8 +48,7 @@ export default {
       .then(response => {
         if(response.data.success){
           this.responseIsSuccess = false;
-          this.textAlertMessage = `${type} #${response.data.id} with ${area} area successfully added`;
-          this.showAddAlert = true;
+          swal(`${type} #${response.data.id} added`, `Area: ${area}`, 'success');
         }
       })
     },
