@@ -87,7 +87,10 @@ export default {
     addCircle(evt) {
       evt.preventDefault();
       const area = this.getCircleArea();
-      this.$emit('addFigures', APP.types.circle, area);
+      const data = {
+        radius: this.radius
+      }
+      this.$emit('addFigures', APP.types.circle, area, data);
     },
     
   }

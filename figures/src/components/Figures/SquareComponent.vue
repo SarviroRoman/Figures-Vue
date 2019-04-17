@@ -86,7 +86,10 @@ export default {
     addSquare(evt) {
       evt.preventDefault();
       const area = this.getSquareArea();
-      this.$emit('addFigures', APP.types.square, area);
+      const data = {
+        length: this.square
+      }
+      this.$emit('addFigures', APP.types.square, area, data);
     },
     
   }

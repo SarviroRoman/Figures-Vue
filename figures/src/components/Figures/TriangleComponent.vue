@@ -147,7 +147,12 @@ export default {
     addTriangle(evt) {
       evt.preventDefault();
       const area = this.getTriangleArea();
-      this.$emit('addFigures', APP.types.triangle, area);
+      const data = {
+        length1: this.length1,
+        length2: this.length2,
+        length3: this.length3,
+      }
+      this.$emit('addFigures', APP.types.triangle, area, data);
     },
     
   }

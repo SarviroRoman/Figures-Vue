@@ -36,13 +36,14 @@ export default {
     }
   },
   methods: {
-    addFigures(type, area){
+    addFigures(type, area, data){
       this.responseIsSuccess = true;
       const newFigure = {
         type: type,
-        area: area
+        area: area,
+        data: data
       };
-
+      
       axios
       .post(`${APP.endpoints.baseUrl}${APP.endpoints.figures}`, newFigure)
       .then(response => {

@@ -168,7 +168,13 @@ export default {
     addRectangle(evt) {
       evt.preventDefault();
       const area = this.getRectangleArea();
-      this.$emit('addFigures', APP.types.rectangle, area);
+      const data = {
+        x1: this.x1,
+        y1: this.y1,
+        x2: this.x2,
+        y2: this.y2,
+      }
+      this.$emit('addFigures', APP.types.rectangle, area, data);
     },
     
   }
