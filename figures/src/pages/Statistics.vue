@@ -22,6 +22,26 @@
         </template>
         
       </b-table>
+
+      <div class="mt-4">
+        <b-progress 
+          v-for="(item, index) in getStatistics" 
+          :key="index" 
+          :variant="checkType(item.type)"
+          show-progress 
+          striped 
+          animated 
+          height="25px" 
+          class="mb-3 progress-text"
+        >
+          <b-progress-bar 
+            :value="item.percent" 
+          >
+            <strong>{{item.type}}: {{item.percent}}% / {{item.area}}</strong>
+          </b-progress-bar>
+        </b-progress>
+      </div>
+
     </div>
   </div>
   
@@ -61,6 +81,16 @@ export default {
       ]
     }
   },
+
+  mounted(){
+      axios
+      .get(`${APP.endpoints.baseUrl}${APP.endpoints.figures}`)
+      .then(response => {
+        this.figures = response.data;
+        this.getFiguresIsSuccess = true; 
+      });
+    }, 
+
   computed: {
     getStatistics() {
       let totalArea = 0; 
@@ -123,19 +153,36 @@ export default {
       return statistics;
     }
   },
-  mounted(){
-    axios
-    .get(`${APP.endpoints.baseUrl}${APP.endpoints.figures}`)
-    .then(response => {
-      this.figures = response.data;
-      this.getFiguresIsSuccess = true; 
-    });
-  }
+  
+  methods: {
+    checkType(type){
+      switch (type) {
+        case APP.types.circle:
+          return 'warning';
+
+        case APP.types.square:
+          return 'danger';
+
+        case APP.types.rectangle:
+          return 'primary';
+
+        case APP.types.triangle:
+          return 'success'; 
+
+        default:
+          return 'secondary';
+      }
+    }
+  },
+
 }
 </script>
 
 <style scoped>
   .statistics-section{
     margin-top: 15px;   
+  }
+  .progress-text{
+    font-size: 15px;
   }
 </style>
