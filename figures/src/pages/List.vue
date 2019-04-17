@@ -54,29 +54,6 @@
         aria-controls="figures-table"
       ></b-pagination>
 
-      <b-alert v-model="showDeleteAlert" variant="success" class="deleteAlert" dismissible>
-        <p class="text-center">{{ deleteMessage }}</p>
-      </b-alert>
-
-      <b-modal 
-        centered 
-        title="Figure deletion" 
-        ref="delModalRef" 
-        ok-variant="outline-danger"
-        ok-title='Delete' 
-        @ok="deleteFigure()" 
-      >
-
-        <p class="my-3">
-          <strong>Are you sure you want to delete this figure?</strong>
-          <br />
-          All information associated to this figure will be permanently deleted.
-          <br />
-          <span class="text-danger">This operation can not be undone.</span>
-        </p>
-
-      </b-modal>
-
     </div>
   </div>
   
@@ -90,7 +67,7 @@ import Spinner from '@/components/Spinner'
 import NoFiguresAlert from '@/components/NoFiguresAlert'
 import ButtonSpinner from '@/components/ButtonSpinner'
 import { APP } from '../application-constants'
-
+import swal from 'sweetalert'
 
 export default {
   name: 'list',
@@ -107,9 +84,6 @@ export default {
       figures: [],
       getFiguresIsSuccess: false,
       showDeleteSpinner: false,
-      deleteMessage: '',
-      showDeleteAlert: false,
-      currentIdDeleteFigure: Number,
       fields: [
         {
           key: 'id',
@@ -146,11 +120,20 @@ export default {
   },
   methods: {
     openDelModal: function(id){
-      this.currentIdDeleteFigure = id;
-      this.$refs.delModalRef.show();
+      swal({
+        title: 'Are you sure ?',
+        text: 'This operation can not be undone!',
+        icon: 'error',
+        buttons: true,
+        dangerMode: true,
+      }).then((willDelete) => {
+        if(willDelete){
+          this.deleteFigure(id);
+        }
+      });
     },
-    deleteFigure: function () {
-      const id = this.currentIdDeleteFigure;
+
+    deleteFigure: function (id) {
       this.showDeleteSpinner = true;
       axios
       .delete(`${APP.endpoints.baseUrl}${APP.endpoints.figures}?id=${id}`)
@@ -160,8 +143,7 @@ export default {
           this.figures.splice(index,1);
           this.showDeleteSpinner = false;
           this.showAlertDeleteFigure = true;
-          this.deleteMessage = `Figures #${id} successfully deleted`;
-          this.showDeleteAlert = true;
+          swal(`Figure #${id} deleted`, '', 'success');
 
           if(this.figures.length <= (this.currentPage-1)*this.perPage){
             --this.currentPage;
