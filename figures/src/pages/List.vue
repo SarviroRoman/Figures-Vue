@@ -35,9 +35,9 @@
 
         <template slot="row-details" slot-scope="data">
         <b-card>
-          <b-row class="mb-2">
-            <b-col sm="3" class="text-sm-right"><b>area:</b></b-col>
-            <b-col>{{ data.item.area }}</b-col>
+          <b-row class="mb-2" v-for="(value, key, index) in data.item.data" :key="index">
+            <b-col sm="3" class="text-sm-right"><b>{{key}}:</b></b-col>
+            <b-col>{{ value }}</b-col>
           </b-row>
           <button class="btn btn-sm btn-outline-dark" @click="data.toggleDetails">Close</button>
         </b-card>
