@@ -70,7 +70,7 @@ app.delete('/figures', (request, response) => {
 });
 
 app.post('/figures', (request, response) => {
-  const {type, area} = request.body;
+  const {type, area, data} = request.body;
   let newId = 1;
 
   if (figures[figures.length-1] !== undefined){
@@ -80,7 +80,8 @@ app.post('/figures', (request, response) => {
   figures.push({
     id: newId,
     type,
-    area
+    area,
+    data
   });
 
   setTimeout( () =>{
