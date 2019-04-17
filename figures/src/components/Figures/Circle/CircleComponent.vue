@@ -51,7 +51,7 @@
 import TitleMessage from '@/components/Figures/TitleMessage'
 import FiguresInformation from '@/components/Figures/FiguresInformation'
 import ButtonSpinner from '@/components/ButtonSpinner'
-import { APP } from '../../application-constants'
+import { APP } from '@/application-constants'
 
 export default {
   name: 'CircleComponent',

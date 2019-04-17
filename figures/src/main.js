@@ -17,10 +17,10 @@ import add from '@/pages/Add'
 import statistics from '@/pages/Statistics'
 import NotFound from '@/components/NotFound'
 
-import CircleComponent from '@/components/Figures/CircleComponent'
-import RectangleComponent from '@/components/Figures/RectangleComponent'
-import SquareComponent from '@/components/Figures/SquareComponent'
-import TriangleComponent from '@/components/Figures/TriangleComponent'
+import CircleComponent from '@/components/Figures/Circle/CircleComponent'
+import RectangleComponent from '@/components/Figures/Rectangle/RectangleComponent'
+import SquareComponent from '@/components/Figures/Square/SquareComponent'
+import TriangleComponent from '@/components/Figures/Triangle/TriangleComponent'
 
 import { APP } from '@/application-constants'
 
